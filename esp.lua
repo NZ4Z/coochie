@@ -14,7 +14,7 @@ function module.ESP(Target)
         Text = TextLabel
     }
     module.Targets[Target].Box.Thickness = 2
-    module.Targets[Target].Box.Color = Color3.fromRGB(255,0,0)
+    module.Targets[Target].Box.Color = Color3.fromRGB(0,255,0)
     BillboardGui.Name = 'ESP'
     BillboardGui.AlwaysOnTop = true
     BillboardGui.Size = UDim2.new(0, 5, 0, 5)
