@@ -1,4 +1,5 @@
 --first comment, yeah its bullshit but still funny.
+--IF you http spy, or constants dump and steal this esp your a fucking skid dirty faggot
 local module = {}
 module.Targets = {}
 
