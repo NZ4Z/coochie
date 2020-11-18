@@ -86,6 +86,7 @@ game:GetService'RunService'.Stepped:Connect(function()
             if Visible and Box and Label then
                 Box.Visible = true
                 Label.TextTransparency = 0
+                Label.Parent.Parent = Root
                 Label.Parent.Adornee = Root
                 Label.Text = target.Name .. ' [' .. math.floor(target.Character.Humanoid.Health) .. '/' .. math.floor(target.Character.Humanoid.MaxHealth) .. '] [' .. math.floor(target:DistanceFromCharacter(Player.Character.Torso.Position)) .. ']'
                 Box.PointA = Vector2.new(TL.X, TL.Y)
