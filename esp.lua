@@ -14,7 +14,7 @@ function module.ESP(Target)
         Text = TextLabel
     }
     module.Targets[Target].Box.Thickness = 2
-    module.Targets[Target].Box.Color = Color3.fromRGB(0,255,0)
+    module.Targets[Target].Box.Color = Color3.fromRGB(0,0,255)
     BillboardGui.Name = 'ESP'
     BillboardGui.AlwaysOnTop = true
     BillboardGui.Size = UDim2.new(0, 5, 0, 5)
@@ -86,7 +86,6 @@ game:GetService'RunService'.Stepped:Connect(function()
             if Visible and Box and Label then
                 Box.Visible = true
                 Label.TextTransparency = 0
-                Label.Parent.Parent = Root
                 Label.Parent.Adornee = Root
                 Label.Text = target.Name .. ' [' .. math.floor(target.Character.Humanoid.Health) .. '/' .. math.floor(target.Character.Humanoid.MaxHealth) .. '] [' .. math.floor(target:DistanceFromCharacter(Player.Character.Torso.Position)) .. ']'
                 Box.PointA = Vector2.new(TL.X, TL.Y)
