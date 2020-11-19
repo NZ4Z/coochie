@@ -17,7 +17,7 @@ local funcs = {
         local arguments = {...}
         local namecallMethod = getnamecallmethod();
 
-        if (namecallMethod == 'FireServer' and (table.find(detectedProperties, arguments[1])) or self.Parent == game.ReplicatedStorage or (self.Name == 'Input' and args[1] == 'bv') or (self.Name == 'Input' and args[1] == 'hb')) then
+        if (namecallMethod == 'FireServer' and (table.find(detectedProperties, arguments[1])) or self.Parent == game.ReplicatedStorage or (self.Name == 'Input' and arguments[1] == 'bv') or (self.Name == 'Input' and arguments[1] == 'hb')) then
             return wait(9e9);
         end
         if (namecallMethod == 'Kick' or namecallMethod == 'Destroy') and (self == game.Players.LocalPlayer) then
