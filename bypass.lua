@@ -1,80 +1,57 @@
-local meta = getrawmetatable(game); -- by dot_mp4 FUCKING OBVIOUSLY BECAUSE DUDE (JEREMY HERE) I CANNOT BOTHER WITH LOOL? META TABLES
-local index, namecall, newindex = meta.__index, meta.__namecall, meta.__newindex;
+-- by dot_mp4
 
-local detectedProps = {
-    "bv";
-    "hb";
+local detectedProperties = {
     "WalkSpeed";
     "JumpPower";
     "HipHeight";
-    "Health"
+    "Health";
 }
 
-local function IsA(self, prop)
-    return self.IsA(self, prop)
-end
+local meta = getrawmetatable(game);
+local oldNamecall, oldNewindex, oldIndex = meta.__namecall, meta.__newindex, meta.__index;
 
-local fakeBv = Instance.new'BodyVelocity';
-fakeBv.Name = 'Tempby';
+setreadonly(meta, false);
 
-setreadonly(meta, false)
+local funcs = {
+    namecall = function(self, ...)
+        local arguments = {...}
+        local namecallMethod = getnamecallmethod();
 
-meta.__index = newcclosure(function(self, indexed)
-    if getcallingscript() ~= script then
-        if indexed == 'Name' and (IsA(self, 'BodyPosition') or IsA(self, 'BodyVelocity') or IsA(self, 'BodyGyro')) then
-            return fakeBv;
+        if (namecallMethod == 'FireServer' and (table.find(detectedProperties, arguments[1])) or self.Parent == game.ReplicatedStorage or (self.Name == 'Input' and args[1] == 'bv') or (self.Name == 'Input' and args[1] == 'hb')) then
+            return wait(9e9);
         end
-    end
-    return index(self, indexed);
-end)
+        if (namecallMethod == 'Kick' or namecallMethod == 'Destroy') and (self == game.Players.LocalPlayer) then
+            return wait(9e9);
+        end
+        if game.Players.LocalPlayer.Character and ((self == game.Players.LocalPlayer.Character and namecallMethod == 'ClearAllChildren') or (self == game.Players.LocalPlayer.Character and namecallMethod == 'BreakJoints')) then
+            return wait(9e9);
+        end
+        if (namecallMethod == 'Destroy') and (self.Name == 'BodyGyro' or self.Name == 'BodyVelocity' or self.Name == 'BodyPosition') then
+            return wait(9e9);
+        end
 
-meta.__newindex = newcclosure(function(self, key, value)
-    if not checkcaller() then
+        return oldNamecall(self, unpack(arguments));
+    end;
+    newindex = function(self, key, value)
+        if checkcaller() then
+            return oldNewindex(self, key, value);
+        end
+
         if self:IsDescendantOf(game.Players.LocalPlayer.Character) and (key == 'CFrame') then
             return wait(9e9);
-        end 
-
-        if IsA(self, 'Humanoid') then
-            game.StarterGui:SetCore('ResetButtonCallback', true)
-            if (key == 'WalkSpeed' or key == 'JumpPower' or key == 'HipHeight' or key == 'Health') then
+        end
+        if (self:IsA'Humanoid') then
+            game.StarterGui:SetCore('ResetButtonCallback', true);
+            if (key == 'Health' or key == 'WalkSpeed' or key == 'JumpPower' or key == 'HipHeight') then
                 return;
             end
         end
-    end
-    return newindex(self, key, value);
-end)
 
-meta.__namecall = newcclosure(function(self, ...)
-    local method, args = getnamecallmethod(), {...};
-    
-    if not checkcaller() then
-        if (method == 'FireServer') then
-            if (table.find(detectedProps, args[1]) or self.Parent == game.ReplicatedStorage) then
-                return wait(9e9);
-            end
-            if (args[1] == 'ws') then
-                args[2].w = args[2].z;
-            end
-            if (args[2] and args[2].mousehit) then
-                if returnAimbot() then
-                    args[2].mousehit = returnAimbot()
-                    return namecall(self, unpack(args))
-                end
-            end
-        end
+        return oldNewindex(self, key, value);
+    end;
+}
 
-        if (method == 'Kick' or method == 'Destroy') and (self == game.Players.LocalPlayer) then
-            return wait(9e9);
-        end
-        if (method == 'ClearAllChildren' or method == 'BreakJoints') and self == game.Players.LocalPlayer.Character then
-            return wait(9e9);
-        end
-        if (method == 'Destroy') and (IsA(self, 'BodyVelocity') or IsA(self, 'BodyPosition') or IsA(self, 'BodyGyro')) then
-            return wait(9e9);
-        end
-    end
+meta.__namecall = newcclosure(funcs.namecall);
+meta.__newindex = newcclosure(funcs.newindex);
 
-    return namecall(self, unpack(args))
-end)
-
-setreadonly(meta, true)
+setreadonly(meta, true);
