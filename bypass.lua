@@ -1,4 +1,4 @@
--- by dot_mp4 yeah obviously fucker
+-- by dot_mp4
 
 local detectedProperties = {
     "WalkSpeed";
@@ -10,6 +10,9 @@ local detectedProperties = {
 local meta = getrawmetatable(game);
 local oldNamecall, oldNewindex, oldIndex = meta.__namecall, meta.__newindex, meta.__index;
 
+local fakeBodyVelocity = Instance.new'BodyVelocity';
+fakeBodyVelocity.Name = 'Tempby';
+
 setreadonly(meta, false);
 
 local funcs = {
@@ -17,8 +20,21 @@ local funcs = {
         local arguments = {...}
         local namecallMethod = getnamecallmethod();
 
-        if (namecallMethod == 'FireServer' and (table.find(detectedProperties, arguments[1])) or self.Parent == game.ReplicatedStorage or (self.Name == 'Input' and arguments[1] == 'bv') or (self.Name == 'Input' and arguments[1] == 'hb')) then
-            return wait(9e9);
+        if (namecallMethod == 'FireServer') then
+            if self.Parent == game.ReplicatedStorage then
+                return wait(9e9);
+            end
+            if table.find(detectedProperties, arguments[1]) then
+                return wait(9e9);
+            end
+            if self.Name == 'Input' then
+                if (arguments[1] == 'bv' or arguments[1] == 'hb') then
+                    return wait(9e9);
+                end
+                if (arguments[1] == 'ws') then
+                    return wait(9e9);
+                end
+            end
         end
         if (namecallMethod == 'Kick' or namecallMethod == 'Destroy') and (self == game.Players.LocalPlayer) then
             return wait(9e9);
