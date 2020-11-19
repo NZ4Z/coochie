@@ -1,4 +1,4 @@
--- by dot_mp4
+-- by dot_mp4 yeah obviously fucker
 
 local detectedProperties = {
     "WalkSpeed";
