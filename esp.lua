@@ -1,12 +1,12 @@
---first comment, yeah its bullshit but still funny.
---IF you http spy, or constants dump and steal this esp your a fucking skid dirty faggot
 local module = {}
 module.Targets = {}
 
 local Size = Vector3.new(2,3,0)
 local Player = game.Players.LocalPlayer
 
-function module.ESP(Target)
+function module.esp(Target)
+    if module.Targets[Target] then return end
+
     local BillboardGui = Instance.new("BillboardGui")
     local TextLabel = Instance.new("TextLabel")
     module.Targets[Target] = {
@@ -14,7 +14,7 @@ function module.ESP(Target)
         Text = TextLabel
     }
     module.Targets[Target].Box.Thickness = 2
-    module.Targets[Target].Box.Color = Color3.fromRGB(0,0,255)
+    module.Targets[Target].Box.Color = Color3.fromRGB(255,0,0)
     BillboardGui.Name = 'ESP'
     BillboardGui.AlwaysOnTop = true
     BillboardGui.Size = UDim2.new(0, 5, 0, 5)
@@ -53,7 +53,7 @@ local function findTable(Table, Value) -- checks the index too (NOT FULLY USELES
     return nil
 end
 
-function module.unESP(Target)
+function module.unesp(Target)
     if module.Targets[Target] then
         local Table = module.Targets[Target]
         module.Targets[Target] = nil
@@ -101,4 +101,8 @@ game:GetService'RunService'.Stepped:Connect(function()
     end
 end)
 
-return module
+game.Players.PlayerRemoving:Connect(function(Player)
+    if table.find(module.Targets, Player) then
+        module.unesp(Player)
+    end
+end)
