@@ -106,3 +106,5 @@ game.Players.PlayerRemoving:Connect(function(Player)
         module.unesp(Player)
     end
 end)
+
+return module
