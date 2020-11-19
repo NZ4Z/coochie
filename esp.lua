@@ -1,3 +1,5 @@
+--[[Made by dot_mp4 module.esp(game.players.icythugs) shoutout to my nigga jack he really do be helpin and yeah icypugs helped debug]]
+
 local module = {}
 module.Targets = {}
 
@@ -14,7 +16,7 @@ function module.esp(Target)
         Text = TextLabel
     }
     module.Targets[Target].Box.Thickness = 2
-    module.Targets[Target].Box.Color = Color3.fromRGB(255,0,0)
+    module.Targets[Target].Box.Color = Color3.fromRGB(255,255,255)
     BillboardGui.Name = 'ESP'
     BillboardGui.AlwaysOnTop = true
     BillboardGui.Size = UDim2.new(0, 5, 0, 5)
