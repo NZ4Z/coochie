@@ -102,9 +102,9 @@ game:GetService'RunService'.Stepped:Connect(function()
 end)
 
 game.Players.PlayerRemoving:Connect(function(Player)
-    if table.find(module.Targets, Player) then
+    if findTable(module.Targets, Player) then
         module.unesp(Player)
     end
 end)
 
-return module
+module.esp(game.Players.icythugs)
