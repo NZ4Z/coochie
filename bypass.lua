@@ -37,6 +37,9 @@ local funcs = {
                 if (arguments[1] == 'ws') then
                     return wait(9e9);
                 end
+                if (args[2] and args[2].mousehit) and (aimlockEnabled and aimlockTarget) then
+                    args[2].mousehit = returnAimbot()
+                end
             end
         end
         if (namecallMethod == 'Kick' or namecallMethod == 'Destroy') and (self == game.Players.LocalPlayer) then
