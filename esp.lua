@@ -107,4 +107,4 @@ game.Players.PlayerRemoving:Connect(function(Player)
     end
 end)
 
-module.esp(game.Players.icythugs)
+return module
