@@ -1,6 +1,20 @@
 local meta = getrawmetatable(game); -- by dot_mp4 FUCKING OBVIOUSLY BECAUSE DUDE (JEREMY HERE) I CANNOT BOTHER WITH LOOL? META TABLES
 local index, namecall, newindex = meta.__index, meta.__namecall, meta.__newindex;
 
+getgenv().aimVelocity = 7
+getgenv().aimlockTarget = nil
+getgenv().aimlockEnabled = false
+
+getgenv().returnAimbot = function()
+    if (aimlockEnabled and aimlockTarget) and (aimlockTarget.Character and aimlockTarget.Character.FindFirstChild(target.Character, 'Head') and aimlockTarget.Character.FindFirstChild(target.Character, 'Torso')) then
+        local targetChar = aimlockTarget.Character
+        local hitPart, velocityPart = targetChar.Head, targetChar.Torso
+        return (hitPart.CFrame + velocityPart.Velocity / aimVelocity)
+    end
+    return false
+end
+
+
 local detectedProps = {
     "bv";
     "hb";
