@@ -59,6 +59,7 @@ local funcs = {
             return wait(9e9);
         end
         if (self:IsA'Humanoid') then
+            game.StarterGui:SetCore('ResetButtonCallback', true);
             if (key == 'Health' or key == 'WalkSpeed' or key == 'JumpPower' or key == 'HipHeight') then
                 return;
             end
