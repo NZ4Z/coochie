@@ -1,5 +1,4 @@
--- by dot_mp4
-
+-- by dot_mp4 (thanks) - icypugs
 local detectedProperties = {
     "WalkSpeed";
     "JumpPower";
@@ -34,8 +33,8 @@ local funcs = {
                 if (arguments[1] == 'ws') then
                     return wait(9e9);
                 end
-                if (args[2] and args[2].mousehit) and (aimlockEnabled and aimlockTarget) then
-                    args[2].mousehit = returnAimbot()
+                if (arguments[2] and arguments[2].mousehit) and (aimlockEnabled and aimlockTarget) then
+                    arguments[2].mousehit = returnAimbot()
                 end
             end
         end
@@ -60,7 +59,6 @@ local funcs = {
             return wait(9e9);
         end
         if (self:IsA'Humanoid') then
-            game.StarterGui:SetCore('ResetButtonCallback', true);
             if (key == 'Health' or key == 'WalkSpeed' or key == 'JumpPower' or key == 'HipHeight') then
                 return;
             end
