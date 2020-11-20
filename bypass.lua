@@ -21,12 +21,6 @@ local funcs = {
         local namecallMethod = getnamecallmethod();
 
         if (namecallMethod == 'FireServer') then
-            if self.Name == 'lIIl' then
-                return wait(9e9);
-            end
-            if self.Name == 'lIII' then
-                return wait(9e9);
-            end
             if self.Parent == game.ReplicatedStorage then
                 return wait(9e9);
             end
