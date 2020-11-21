@@ -55,9 +55,6 @@ local funcs = {
             return oldNewindex(self, key, value);
         end
 
-        if self:IsDescendantOf(game.Players.LocalPlayer.Character) and (key == 'CFrame') then
-            return wait(9e9);
-        end
         if (self:IsA'Humanoid') then
             game.StarterGui:SetCore('ResetButtonCallback', true);
             if (key == 'Health' or key == 'WalkSpeed' or key == 'JumpPower' or key == 'HipHeight') then
@@ -65,6 +62,10 @@ local funcs = {
             end
         end
 
+        if ((key == 'CFrame') and (self:IsDescendantOf(game.Players.LocalPlayer.Character))) then
+            return;
+        end
+        
         return oldNewindex(self, key, value);
     end;
 }
