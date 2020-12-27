@@ -55,6 +55,12 @@ local function findTable(Table, Value) -- checks the index too (NOT FULLY USELES
     return nil
 end
 
+function module.hidesp(Table, bool)
+    table.foreach(Table, function(_, Key)
+        Key.Visible = bool
+    end)
+end
+
 function module.unesp(Target)
     if module.Targets[Target] then
         local Table = module.Targets[Target]
@@ -75,9 +81,13 @@ end
 
 game:GetService'RunService'.Stepped:Connect(function()
     for target, Table in next, module.Targets do
-        if target and target.Character and Player and Player.Character and FindFirstChild(Player.Character, 'Torso') then
+        if not FindFirstChild(game.Players, target.Name) then
+            module.unesp(target)
+            return
+        end
+        if target.Character and Player and Player.Character and FindFirstChild(Player.Character, 'Torso') and FindFirstChild(Player.Character, 'Humanoid') and Player.Character.Humanoid.Health > 0 then
             local Root = FindFirstChild(target.Character, 'HumanoidRootPart') or FindFirstChild(target.Character, 'Torso')
-            if not FindFirstChild(target.Character, 'Humanoid') or not Root then return end
+            if not FindFirstChild(target.Character, 'Humanoid') or not Root then module.hidesp(Table, false) return end
             local TL, Visible = WorldToViewportPoint((Root.CFrame * CFrame.new(Size.X, Size.Y, 0)).Position)
             local TR = WorldToViewportPoint((Root.CFrame * CFrame.new(-Size.X, Size.Y, 0)).Position)
             local BL = WorldToViewportPoint((Root.CFrame * CFrame.new(Size.X, -Size.Y, 0)).Position)
@@ -86,7 +96,7 @@ game:GetService'RunService'.Stepped:Connect(function()
             local Box, Label = Table.Box, Table.Text
 
             if Visible and Box and Label then
-                Box.Visible = true
+                module.hidesp(Table, true)
                 Label.TextTransparency = 0
                 Label.Parent.Parent = Root
                 Label.Parent.Adornee = Root
@@ -96,9 +106,11 @@ game:GetService'RunService'.Stepped:Connect(function()
                 Box.PointC = Vector2.new(BR.X, BR.Y)
                 Box.PointD = Vector2.new(BL.X, BL.Y)
             else
-                Box.Visible = false
+                module.hidesp(Table, false)
                 Label.TextTransparency = 1
             end
+        else
+            module.hidesp(Table, false)
         end
     end
 end)
